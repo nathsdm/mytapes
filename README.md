@@ -26,17 +26,3 @@ To use the project, follow these steps:
 
 1. Open your web browser and navigate to the development server URL.
 2. Use the application to perform the desired actions.
-
-## Contributing
-
-If you would like to contribute to the project, please follow these steps:
-
-1. Fork the repository to your own GitHub account.
-2. Create a new branch from the `main` branch.
-3. Make your changes and commit them to your branch.
-4. Push your branch to your GitHub account.
-5. Create a pull request from your branch to the `main` branch of the original repository.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
