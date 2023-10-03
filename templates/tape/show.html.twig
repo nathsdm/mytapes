@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TapeController!{% endblock %}
+
+{% block body %}
+      <h1>Tape</h1>
+
+      {% dump Tape %}
+
+      <table class="table">
+          <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Artiste</th>
+                    <th>Année</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ Tape.id }}</td>
+                    <td>{{ Tape.name }}</td>
+                    <td>{{ Tape.artist }}</td>
+                    <td>{{ Tape.year }}</td>
+                </tr>
+            </tbody>
+      </table>
+
+        <a href="{{ path('inventory_list') }}">back to list</a>
+{% endblock %}

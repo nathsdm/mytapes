@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block body %}
+<h1>Inventory index</h1>
+
+<ul>
+  {% for inventory in inventories %}
+    <li>
+      <a href="{{ path('inventory_show', { 'id': inventory.id }) }}">{{ inventory.name }}</a>
+    </li>
+  {% endfor %} {# todos #}
+</ul>
+
+{% endblock %} {# body #}
