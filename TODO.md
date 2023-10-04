@@ -6,9 +6,9 @@ This file lists the remaining tasks for the project.
 
 - [ ] Add support for user authentication
 - [ ] Implement a search feature for tapes
-- [ ] Add pagination to the inventory list
+- [ ] Add public galleries
 - [ ] Allow users to edit and delete tapes
-- [ ] Implement a dashboard for administrators
+- [ ] Implement a dashboard for administrators and not just database managers
 
 ## Bug Fixes
 
@@ -16,6 +16,5 @@ This file lists the remaining tasks for the project.
 
 ## Technical Debt
 
-- [ ] Refactor the `AppFixtures` class to use factories instead of generators
 - [ ] Remove unused code and dependencies
 - [ ] Improve the code documentation
