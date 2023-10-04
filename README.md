@@ -1,6 +1,6 @@
 # Project Name
 
-This project was created by Nathan SOARES DE MELO and is built using PHP and Composer.
+This project was created by Nathan SOARES DE MELO and is built using PHP, Symfony, Composer and Twig. It aims to provide a simple web application for managing music tapes. Each member should be able to create an account, add inventories, and add tapes to their inventories.
 
 ## Architecture
 
