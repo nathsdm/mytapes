@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TapeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TapeRepository::class)]
@@ -25,6 +27,14 @@ class Tape
     #[ORM\ManyToOne(inversedBy: 'Tape')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Inventory $inventory = null;
+
+    #[ORM\ManyToMany(targetEntity: Gallery::class, mappedBy: 'tapes')]
+    private Collection $galleries;
+
+    public function __construct()
+    {
+        $this->galleries = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -80,6 +90,33 @@ class Tape
     public function setInventory(?Inventory $inventory): static
     {
         $this->inventory = $inventory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gallery>
+     */
+    public function getGalleries(): Collection
+    {
+        return $this->galleries;
+    }
+
+    public function addGallery(Gallery $gallery): static
+    {
+        if (!$this->galleries->contains($gallery)) {
+            $this->galleries->add($gallery);
+            $gallery->addTape($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(Gallery $gallery): static
+    {
+        if ($this->galleries->removeElement($gallery)) {
+            $gallery->removeTape($this);
+        }
 
         return $this;
     }

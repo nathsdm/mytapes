@@ -5,7 +5,7 @@
 {% block body %}
       <h1>Inventory</h1>
 
-      {% dump Inventory %}
+      {% dump inventory %}
 
       <table class="table">
            <thead>
@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for tape in Inventory.tapes %}
+                {% for tape in inventory.tapes %}
                 <tr>
                     <td> <a href="{{ path('tape_show', { 'id': tape.id }) }}">{{ tape.id }}</a> </td>
                     <td>{{ tape.name }}</td>
@@ -28,5 +28,7 @@
             </tbody>
       </table>
 
-        <a href="{{ path('inventory_list') }}">Back to the list</a>
+    <a href="{{ path('inventory_list') }}">Back to the list</a>
+
+    {{ include('inventory/_delete_form.html.twig') }}
 {% endblock %}

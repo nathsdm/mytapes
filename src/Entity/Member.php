@@ -28,9 +28,13 @@ class Member
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birth = null;
 
+    #[ORM\OneToMany(mappedBy: 'Member', targetEntity: Gallery::class)]
+    private Collection $galleries;
+
     public function __construct()
     {
         $this->inventory = new ArrayCollection();
+        $this->galleries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,6 +109,36 @@ class Member
     public function setBirth(?\DateTimeInterface $birth): static
     {
         $this->birth = $birth;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gallery>
+     */
+    public function getGalleries(): Collection
+    {
+        return $this->galleries;
+    }
+
+    public function addGallery(Gallery $gallery): static
+    {
+        if (!$this->galleries->contains($gallery)) {
+            $this->galleries->add($gallery);
+            $gallery->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(Gallery $gallery): static
+    {
+        if ($this->galleries->removeElement($gallery)) {
+            // set the owning side to null (unless already changed)
+            if ($gallery->getMember() === $this) {
+                $gallery->setMember(null);
+            }
+        }
 
         return $this;
     }

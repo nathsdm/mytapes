@@ -1,0 +1,7 @@
+bootstrap_menu:
+  menus:
+    main:
+      items:
+        todos:
+          label: 'Inventories'
+          route: 'inventory_list'
