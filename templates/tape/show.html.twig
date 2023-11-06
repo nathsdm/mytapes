@@ -12,6 +12,15 @@
                 <h1 class="display-4">{{ Tape.name }}</h1>
                 <p class="lead">{{ Tape.artist }} - {{ Tape.year }}</p>
                 <p class="lead"> {{ Tape.likes }} likes</p>
+                {% if user_has_liked_tape %}
+                    <form method="POST" action="{{ path('app_tape_dislike', {'id': Tape.id}) }}">
+                        <button type="submit" class="btn btn-primary" id="likeButton" onclick="submitForm()">Dislike</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{{ path('app_tape_like', {'id': Tape.id}) }}">
+                        <button type="submit" class="btn btn-primary" id="likeButton" onclick="submitForm()">Like</button>
+                    </form>
+                {% endif %}
                 <hr class="my-4">
                 <a href="{{ path('app_tape_edit', {'id': Tape.id}) }}" class="btn btn-primary">Edit</a>
                 {{ include('tape/_delete_form.html.twig') }}
@@ -23,4 +32,15 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function submitForm() {
+            document.getElementById("likeButton").disabled = true;
+            
+            // Submit the form
+            document.getElementById("likeButton").form.submit();
+        }
+    </script>
 {% endblock %}

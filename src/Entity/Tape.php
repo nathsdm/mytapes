@@ -53,9 +53,13 @@ class Tape
     #[ORM\Column]
     private ?int $likes = 0;
 
+    #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'tapesLiked')]
+    private Collection $memberLikes;
+
     public function __construct()
     {
         $this->galleries = new ArrayCollection();
+        $this->memberLikes = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -235,4 +239,29 @@ class Tape
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Member>
+     */
+    public function getMemberLikes(): Collection
+    {
+        return $this->memberLikes;
+    }
+
+    public function addMemberLike(Member $memberLike): static
+    {
+        if (!$this->memberLikes->contains($memberLike)) {
+            $this->memberLikes->add($memberLike);
+        }
+
+        return $this;
+    }
+
+    public function removeMemberLike(Member $memberLike): static
+    {
+        $this->memberLikes->removeElement($memberLike);
+
+        return $this;
+    }
+
 }

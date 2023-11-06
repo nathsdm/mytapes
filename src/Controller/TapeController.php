@@ -24,6 +24,7 @@ class TapeController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $tape = $entityManager->getRepository(Tape::class)->find($id);
+        $member = $this->getUser()->getMember($doctrine);
 
         // Retrieve the $page and $id_page parameters from the Request object
         $page = $request->query->get('page');
@@ -36,7 +37,8 @@ class TapeController extends AbstractController
         return $this->render('tape/show.html.twig', [
             'Tape' => $tape,
             'back_route' => $backRoute,
-            'back_route_params' => $backRouteParams
+            'back_route_params' => $backRouteParams,
+            'user_has_liked_tape' => $member->hasLikedTape($tape),
         ]);
     }
 
@@ -113,5 +115,27 @@ class TapeController extends AbstractController
     private function generateUniqueFileName()
     {
         return md5(uniqid());
+    }
+
+    #[Route('/{id}/likes', name: 'app_tape_like', methods: ['GET', 'POST'])]
+    public function likes(Request $request, Tape $tape, ManagerRegistry $doctrine): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $tape->setLikes($tape->getLikes() + 1);
+        $tape->addMemberLike($this->getUser()->getMember($doctrine));
+        $entityManager->flush();
+
+        return $this->redirectToRoute('tape_show', ['id' => $tape->getId(), 'page' => 'profile'], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/dislikes', name: 'app_tape_dislike', methods: ['GET', 'POST'])]
+    public function dislikes(Request $request, Tape $tape, ManagerRegistry $doctrine): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $tape->setLikes($tape->getLikes() - 1);
+        $tape->removeMemberLike($this->getUser()->getMember($doctrine));
+        $entityManager->flush();
+
+        return $this->redirectToRoute('tape_show', ['id' => $tape->getId(), 'page' => 'profile'], Response::HTTP_SEE_OTHER);
     }
 }
