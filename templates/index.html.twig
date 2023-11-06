@@ -1,11 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Welcome!{% endblock %}
+{% block title %}MyTapes - Tape Collection and Trade{% endblock %}
 
 {% block main %}
 
-<h1>Welcome</h1>
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to MyTapes!</h1>
+        <p class="lead">The best place to buy, sell, and trade cassette tapes.</p>
+        <hr class="my-4">
+        <p>Explore our collection of rare and vintage tapes, or list your own for sale or trade.</p>
+    </div>
 
-    <p>{{ welcome }}</p>
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-md-4">
+            <h2>Featured Tapes</h2>
+            <p>Check out some of our most popular tapes:</p>
+            <ul>
+                <li><a href="#">Thriller - Michael Jackson</a></li>
+                <li><a href="#">Purple Rain - Prince</a></li>
+                <li><a href="#">The Joshua Tree - U2</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h2>Sell Your Tapes</h2>
+            <p>List your tapes for sale and reach a wider audience:</p>
+            <ul>
+                <li><a href="#">Create a Seller Account</a></li>
+                <li><a href="#">List Your Tapes</a></li>
+                <li><a href="#">Manage Your Listings</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h2>Trade Your Tapes</h2>
+            <p>Find other collectors to trade tapes with:</p>
+            <ul>
+                <li><a href="#">Create a Trader Account</a></li>
+                <li><a href="#">Browse Tapes for Trade</a></li>
+                <li><a href="#">Contact Other Traders</a></li>
+            </ul>
+        </div>
+    </div>
 
 {% endblock %} {# main #}

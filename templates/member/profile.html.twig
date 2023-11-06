@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ member.name }}'s Profile{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ member.name }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Email:</strong> {{ member.user.email }}</p>
+                        <p><strong>Joined:</strong> {{ member.creation|date('F j, Y') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class='card'>
+                    <div class="card-header">
+                        <h3 class="card-title">My inventory</h3>
+                    </div>
+                    <div class="card-body">
+                        {% for inventory in member.inventory %}
+                            {% if inventory.tapes|length > 0 %}
+                                <h4>{{ inventory.name }}</h4>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Artist</th>
+                                            <th>Year</th>
+                                            <th>Likes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for tape in inventory.tapes %}
+                                            <tr>
+                                                <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page':'profile', 'id_page':-1 }) }}">{{ tape.name }}</a> </td>
+                                                <td>{{ tape.artist }}</td>
+                                                <td>{{ tape.year }}</td>
+                                                <td>{{ tape.likes }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p>{{ inventory.name }} is empty</p>
+                            {% endif %}
+                        {% endfor %}
+                        <a href="{{ path('app_tape_new', {'memberId': member.id}) }}" class="btn btn-primary float-right">New Tape</a>
+                    </div>
+                </div>
+                <div class='card' style="margin-top: 20px">
+                    <div class="card-header">
+                        <h3 class="card-title">My gallery</h3>
+                    </div>
+                    <div class="card-body">
+                        {% for gallery in member.galleries %}
+                            {% if gallery.tapes|length > 0 %}
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Artist</th>
+                                            <th>Year</th>
+                                            <th>Likes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for tape in gallery.tapes %}
+                                            <tr>
+                                                <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page':'profile', 'id_page':-1 }) }}">{{ tape.name }}</a> </td>
+                                                <td>{{ tape.artist }}</td>
+                                                <td>{{ tape.year }}</td>
+                                                <td>{{ tape.likes }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        {% else %}
+                            <p>Your gallery is empty</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

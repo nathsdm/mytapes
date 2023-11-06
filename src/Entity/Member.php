@@ -28,8 +28,15 @@ class Member
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birth = null;
 
-    #[ORM\OneToMany(mappedBy: 'Member', targetEntity: Gallery::class)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $creation = null;
+
+    #[ORM\OneToMany(mappedBy: 'Member', targetEntity: Gallery::class, cascade: ['persist'])]
     private Collection $galleries;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $User = null;
 
     public function __construct()
     {
@@ -113,12 +120,29 @@ class Member
         return $this;
     }
 
+    public function getCreation(): ?\DateTimeInterface
+    {
+        return $this->creation;
+    }
+
+    public function setCreation(?\DateTimeInterface $creation): static
+    {
+        $this->creation = $creation;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Gallery>
      */
     public function getGalleries(): Collection
     {
         return $this->galleries;
+    }
+
+    public function getGallery(int $id): ?Gallery
+    {
+        return $this->galleries[$id] ?? null;
     }
 
     public function addGallery(Gallery $gallery): static
@@ -131,6 +155,11 @@ class Member
         return $this;
     }
 
+    public function hasGallery(): bool
+    {
+        return !$this->galleries->isEmpty();
+    }
+
     public function removeGallery(Gallery $gallery): static
     {
         if ($this->galleries->removeElement($gallery)) {
@@ -141,5 +170,29 @@ class Member
         }
 
         return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(User $User): static
+    {
+        $this->User = $User;
+
+        return $this;
+    }
+
+    public function getTapes(): Collection
+    {
+        $tapes = new ArrayCollection();
+        foreach ($this->getInventory() as $inventory) {
+            foreach ($inventory->getTapes() as $tape) {
+                $tapes->add($tape);
+            }
+        }
+
+        return $tapes;
     }
 }

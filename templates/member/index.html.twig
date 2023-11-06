@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of all members{% endblock %}
+
+{% block body %}
+    {% for member in members %}
+        <a href="{{ path('app_member_show', { 'id': member.id }) }}">{{ member.name }}</a>
+    {% else %}
+        <p>No members found.</p>
+    {% endfor %}
+{% endblock %}

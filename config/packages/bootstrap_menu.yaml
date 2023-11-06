@@ -2,6 +2,25 @@ bootstrap_menu:
   menus:
     main:
       items:
-        todos:
-          label: 'Inventories'
-          route: 'inventory_list'
+        inventory:
+          label: 'Gallery'
+          route: 'app_gallery_index'
+        profile:
+          label: 'Profile'
+          route: 'app_profile_show'
+          roles: ['ROLE_USER']
+    anonymousaccount:
+      items:
+        login:
+            label: 'Login'
+            route: 'app_login'
+        register:
+          label: 'Register'
+          route: 'app_register'
+    account:
+      items:
+        logout:
+            label: 'Logout'
+            route: 'app_logout'
+            roles: [ 'ROLE_USER' ]
+          

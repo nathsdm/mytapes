@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Gallery index{% endblock %}
+{% block title %}Gallery{% endblock %}
 
 {% block body %}
-    <h1>Gallery index</h1>
+    <h1>Gallery</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Description</th>
-                <th>Published</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,7 +18,6 @@
             <tr>
                 <td>{{ gallery.id }}</td>
                 <td>{{ gallery.description }}</td>
-                <td>{{ gallery.published ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_gallery_show', {'id': gallery.id}) }}">show</a>
                     <a href="{{ path('app_gallery_edit', {'id': gallery.id}) }}">edit</a>
@@ -33,5 +31,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_gallery_new') }}">Create new</a>
 {% endblock %}

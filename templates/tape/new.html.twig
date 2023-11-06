@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Tape{% endblock %}
+
+{% block body %}
+    <h1>Create new Tape</h1>
+
+    {{ include('Tape/_form.html.twig') }}
+
+    <a href="{{ path('home') }}">back to home</a>
+{% endblock %}

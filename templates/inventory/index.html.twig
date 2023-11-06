@@ -8,7 +8,7 @@
 <ul>
   {% for inventory in inventories %}
     <li>
-      <a href="{{ path('inventory_show', { 'id': inventory.id }) }}">{{ inventory.name }}</a>
+      <a href="{{ path('app_inventory_show', { 'id': inventory.id }) }}">{{ inventory.name }}</a>
     </li>
   {% endfor %} {# todos #}
 </ul>

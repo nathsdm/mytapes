@@ -19,7 +19,7 @@
             <tbody>
                 {% for tape in inventory.tapes %}
                 <tr>
-                    <td> <a href="{{ path('tape_show', { 'id': tape.id }) }}">{{ tape.id }}</a> </td>
+                    <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page': 'inventory', 'id_page': inventory.id}) }}">{{ tape.id }}</a> </td>
                     <td>{{ tape.name }}</td>
                     <td>{{ tape.year }}</td>
                     <td>{{ tape.artist }}</td>

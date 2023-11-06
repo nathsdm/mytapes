@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Member {{ member.id }}</h1>
+    <h2>Name: {{ member.name }}</h2>
+    <h2>Birth: {{ member.birth }}</h2>
+    {% for inventory in member.inventory %}
+        <li><a href="{{ path('app_inventory_show', {'id' : inventory.id}) }}">{{ inventory }}</a></li>
+    {% endfor %}
+    <a href="{{ path('app_inventory_new', {'id': member.id}) }}">add new inventory</a>
+{% endblock %}

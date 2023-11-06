@@ -19,6 +19,14 @@
                 <th>Published</th>
                 <td>{{ gallery.published ? 'Yes' : 'No' }}</td>
             </tr>
+            <tr>
+                <th>Tapes</th>
+                <td>
+                {% for tape in gallery.tapes %}
+                    <a href="{{ path('tape_show', {'id': tape.id, 'page': 'gallery', 'id_page': gallery.id}) }}">{{ tape.name }}</a><br>
+                {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 

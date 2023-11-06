@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Entity\Inventory;
+use App\Entity\Member;
 use App\Form\InventoryType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +22,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * Controleur Inventory
      */
 #[Route('/inventory')]
+#[IsGranted('IS_AUTHENTICATED_FULLY')]
 class InventoryController extends AbstractController
 {    
     #[Route('/', name: 'home', methods: ['GET'])]
@@ -34,11 +36,18 @@ class InventoryController extends AbstractController
     #[Route('/new', name: 'app_inventory_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $memberId = $request->query->get('memberId');
+        $member = $entityManager->getRepository(Member::class)->find($memberId);
+        
         $inventory = new Inventory();
-        $form = $this->createForm(InventoryType::class, $inventory);
+        $form = $this->createForm(InventoryType::class, $inventory, [
+            'member' => $member,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $inventory->setMember($member);
+            $member->addInventory($inventory);
             $entityManager->persist($inventory);
             $entityManager->flush();
 
@@ -47,7 +56,7 @@ class InventoryController extends AbstractController
 
         return $this->render('inventory/new.html.twig', [
             'inventory' => $inventory,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
     
@@ -72,11 +81,16 @@ class InventoryController extends AbstractController
      *
      * @param Integer $id (note that the id must be an integer)
      */
-    #[Route('/{id}', name: 'inventory_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route('/{id}', name: 'app_inventory_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(ManagerRegistry $doctrine, $id)
     {
         $inventoryRepo = $doctrine->getRepository(Inventory::class);
         $inventory = $inventoryRepo->find($id);
+
+        $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember($doctrine) == $inventory->getMember());
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("You cannot access another member's inventory!");
+        }
 
         if (!$inventory) {
                 throw $this->createNotFoundException('The inventory does not exist');

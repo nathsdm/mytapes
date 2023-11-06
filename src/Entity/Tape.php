@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\Gallery;
 use App\Repository\TapeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: TapeRepository::class)]
+#[Vich\Uploadable]
 class Tape
 {
     #[ORM\Id]
@@ -30,6 +34,24 @@ class Tape
 
     #[ORM\ManyToMany(targetEntity: Gallery::class, mappedBy: 'tapes')]
     private Collection $galleries;
+
+    #[Vich\UploadableField(mapping: 'tapes', fileNameProperty: 'imageName', size: 'imageSize')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $contentType = null;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $imageSize = null;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $isPublic = false;
+
+    #[ORM\Column]
+    private ?int $likes = 0;
 
     public function __construct()
     {
@@ -117,6 +139,99 @@ class Tape
         if ($this->galleries->removeElement($gallery)) {
             $gallery->removeTape($this);
         }
+
+        return $this;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function setImageName(?string $imageName): self
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    public function setContentType(?string $contentType): self
+    {
+        $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    public function getContentType(): ?string
+    {
+        return $this->contentType;
+    }
+
+    public function setImageSize(?int $imageSize): self
+    {
+        $this->imageSize = $imageSize;
+
+        return $this;
+    }
+
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    public function isPublic(): bool
+    {
+        return $this->isPublic;
+    }
+
+    public function setIsPublic(bool $isPublic): static
+    {
+        $this->isPublic = $isPublic;
+
+        if (!$isPublic) {
+            $this->galleries->clear();
+        } else {
+            if($this->inventory->getMember()->hasGallery()) {
+                $this->galleries->add($this->inventory->getMember()->getGallery(0));
+            } else {
+                $gallery = new Gallery();
+                $gallery->setDescription('Default gallery');
+                $gallery->setPublished(true);
+                $gallery->setMember($this->inventory->getMember());
+                $gallery->addTape($this);
+                
+                $this->inventory->getMember()->addGallery($gallery);
+                $this->galleries->add($this->inventory->getMember()->getGallery(0));
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLikes(): ?int
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(int $likes): static
+    {
+        $this->likes = $likes;
 
         return $this;
     }
