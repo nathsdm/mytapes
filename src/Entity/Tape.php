@@ -53,7 +53,7 @@ class Tape
     #[ORM\Column]
     private ?int $likes = 0;
 
-    #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: 'tapesLiked')]
+    #[ORM\Column(type: 'array', nullable: true)]
     private Collection $memberLikes;
 
     public function __construct()
@@ -207,24 +207,7 @@ class Tape
     public function setIsPublic(bool $isPublic): static
     {
         $this->isPublic = $isPublic;
-
-        if (!$isPublic) {
-            $this->galleries->clear();
-        } else {
-            if($this->inventory->getMember()->hasGallery()) {
-                $this->galleries->add($this->inventory->getMember()->getGallery(0));
-            } else {
-                $gallery = new Gallery();
-                $gallery->setDescription('Default gallery');
-                $gallery->setPublished(true);
-                $gallery->setMember($this->inventory->getMember());
-                $gallery->addTape($this);
-                
-                $this->inventory->getMember()->addGallery($gallery);
-                $this->galleries->add($this->inventory->getMember()->getGallery(0));
-            }
-        }
-
+        
         return $this;
     }
 
@@ -248,20 +231,27 @@ class Tape
         return $this->memberLikes;
     }
 
-    public function addMemberLike(Member $memberLike): static
+    public function addMemberLike(int $memberId): static
     {
-        if (!$this->memberLikes->contains($memberLike)) {
-            $this->memberLikes->add($memberLike);
+        if (!$this->memberLikes->contains($memberId)) {
+            $this->memberLikes->add($memberId);
         }
 
         return $this;
     }
 
-    public function removeMemberLike(Member $memberLike): static
+    public function removeMemberLike(int $memberId): static
     {
-        $this->memberLikes->removeElement($memberLike);
+        if ($this->memberLikes->contains($memberId)) {
+            $this->memberLikes->removeElement($memberId);
+        }
 
         return $this;
+    }
+
+    public function isLikedByMember(int $memberId): bool
+    {
+        return $this->memberLikes->contains($memberId);
     }
 
 }

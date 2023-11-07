@@ -17,7 +17,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-                default_target_path: app_inventory_index
+                default_target_path: app_profile_show
 
             logout:
                 path: app_logout

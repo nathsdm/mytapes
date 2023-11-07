@@ -12,6 +12,7 @@
                     </div>
                     <div class="card-body">
                         <p><strong>Email:</strong> {{ member.user.email }}</p>
+                        <p><strong>Password:</strong> <span id="password" style="display:none">{{ member.user.password }}</span><button id="show-password" class="btn btn-primary btn-sm">Show</button></p>
                         <p><strong>Joined:</strong> {{ member.creation|date('F j, Y') }}</p>
                     </div>
                 </div>
@@ -54,38 +55,61 @@
                 </div>
                 <div class='card' style="margin-top: 20px">
                     <div class="card-header">
-                        <h3 class="card-title">My gallery</h3>
+                        <h3 class="card-title">My galleries</h3>
                     </div>
                     <div class="card-body">
                         {% for gallery in member.galleries %}
-                            {% if gallery.tapes|length > 0 %}
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Artist</th>
-                                            <th>Year</th>
-                                            <th>Likes</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for tape in gallery.tapes %}
-                                            <tr>
-                                                <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page':'profile', 'id_page':-1 }) }}">{{ tape.name }}</a> </td>
-                                                <td>{{ tape.artist }}</td>
-                                                <td>{{ tape.year }}</td>
-                                                <td>{{ tape.likes }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            {% endif %}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Published</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> <a href="{{ path('app_gallery_show', { 'id': gallery.id }) }}">{{ gallery.name }}</a> </td>
+                                        <td>{{ gallery.description }}</td>
+                                        <td>
+                                            <input type="checkbox" class="published-checkbox" data-gallery-id="{{ gallery.id }}" {% if gallery.published %} checked {% endif %}>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         {% else %}
-                            <p>Your gallery is empty</p>
+                            <p>No gallery</p>
                         {% endfor %}
+                        <a href="{{ path('app_gallery_new', {'memberId': member.id}) }}" class="btn btn-primary float-right">New Gallery</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.published-checkbox').change(function() {
+                fetch('/gallery/' + this.dataset.galleryId + '/publish', {
+                    method: 'POST',
+                    body: JSON.stringify({ published: this.checked }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            });
+        });
+        $(document).ready(function() {
+            $('#show-password').click(function() {
+                $('#password').toggle();
+                if ($('#password').is(':visible')) {
+                    $(this).text('Hide');
+                } else {
+                    $(this).text('Show');
+                }
+            });
+        });
+    </script>
 {% endblock %}

@@ -22,13 +22,13 @@
                     </form>
                 {% endif %}
                 <hr class="my-4">
-                <a href="{{ path('app_tape_edit', {'id': Tape.id}) }}" class="btn btn-primary">Edit</a>
-                {{ include('tape/_delete_form.html.twig') }}
-                {% if back_route_params != -1 %}
-                    <a href="{{ path(back_route, back_route_params) }}" class="btn btn-secondary">Back to {{ back_route|slice(4, -5) }}</a>
-                {% else %}
-                    <a href="{{ path(back_route) }}" class="btn btn-secondary">Back to {{ back_route|slice(4, -5) }}</a>
+                {% if app.user and Tape.inventory.member.User == app.user %}
+                <div class="btn-group">
+                    <a href="{{ path('app_tape_edit', {'id': Tape.id}) }}" class="btn btn-primary">Edit</a>
+                    {{ include('tape/_delete_form.html.twig') }}
+                    </div>
                 {% endif %}
+                <button onclick="history.back()" class="btn btn-secondary">back</button>
             </div>
         </div>
     </div>

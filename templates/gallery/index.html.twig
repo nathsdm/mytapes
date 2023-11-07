@@ -8,21 +8,22 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Name</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Show</th>
             </tr>
         </thead>
         <tbody>
         {% for gallery in galleries %}
-            <tr>
-                <td>{{ gallery.id }}</td>
-                <td>{{ gallery.description }}</td>
-                <td>
-                    <a href="{{ path('app_gallery_show', {'id': gallery.id}) }}">show</a>
-                    <a href="{{ path('app_gallery_edit', {'id': gallery.id}) }}">edit</a>
-                </td>
-            </tr>
+            {% if gallery.isPublished %}
+                <tr>
+                    <td>{{ gallery.name }}</td>
+                    <td>{{ gallery.description }}</td>
+                    <td>
+                        <a href="{{ path('app_gallery_show', {'id': gallery.id}) }}">show</a>
+                    </td>
+                </tr>
+            {% endif %}
         {% else %}
             <tr>
                 <td colspan="4">no records found</td>

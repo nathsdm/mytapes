@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Inventory;
 use App\Entity\Tape;
 use App\Entity\Member;
+use App\Entity\Gallery;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
@@ -71,24 +72,59 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'artist' => 'Pink Floyd',
                 'year' => 1973,
                 'inventory' => self::SEB_INVENTORY,
+                'isPublic' => true,
+                'likes' => 10,
             ];
             yield [
                 'name' => 'The Wall',
                 'artist' => 'Pink Floyd',
                 'year' => 1979,
                 'inventory' => self::SEB_INVENTORY,
+                'isPublic' => true,
+                'likes' => 5,
             ];
             yield [
                 'name' => 'The Division Bell',
                 'artist' => 'Pink Floyd',
                 'year' => 1994,
                 'inventory' => self::SEB_INVENTORY,
+                'isPublic' => false,
+                'likes' => 1,
             ];
             yield [
                 'name' => 'エコーチャンバーパーティー',
                 'artist' => 'Macroblank',
                 'year' => 2021,
                 'inventory' => self::OLIVIER_INVENTORY,
+                'isPublic' => true,
+                'likes' => 398,
+            ];
+        }
+
+    /**
+     * Generates initialization data for galleries
+     * @return \\Generator
+     */
+    public static function galleriesGenerator()
+        {
+            yield [
+                'name' => 'The best of Pink Floyd !',
+                'description' => 'Pink Floyd\'s best albums ! Enjoy !',
+                'published' => true,
+                'member' => 'Seb',
+                'tapes' => [
+                    'The Dark Side of the Moon',
+                    'The Wall',
+                ],
+            ];
+            yield [
+                'name' => 'Vaporwave !',
+                'description' => 'My favorite vaporwave tapes',
+                'published' => true,
+                'member' => 'Olivier',
+                'tapes' => [
+                    'エコーチャンバーパーティー',
+                ],
             ];
         }
 
@@ -123,8 +159,23 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 $tape->setName($tapeData['name']);
                 $tape->setArtist($tapeData['artist']);
                 $tape->setYear($tapeData['year']);
+                $tape->setIsPublic($tapeData['isPublic']);
+                $tape->setLikes($tapeData['likes']);
                 $tape->setInventory($this->getReference($tapeData['inventory']));
                 $manager->persist($tape);
+            }
+            $manager->flush();
+
+            foreach (self::galleriesGenerator() as $galleryData) {
+                $gallery = new Gallery();
+                $gallery->setName($galleryData['name']);
+                $gallery->setDescription($galleryData['description']);
+                $gallery->setPublished($galleryData['published']);
+                $gallery->setMember($this->getReference($galleryData['member']));
+                foreach ($galleryData['tapes'] as $tapeName) {
+                    $gallery->addTape($manager->getRepository(Tape::class)->findOneByName($tapeName));
+                }
+                $manager->persist($gallery);
             }
             $manager->flush();
         }

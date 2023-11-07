@@ -38,9 +38,6 @@ class Member
     #[ORM\JoinColumn(nullable: false)]
     private ?User $User = null;
 
-    #[ORM\ManyToMany(targetEntity: Tape::class, mappedBy: 'memberLikes')]
-    private Collection $tapesLiked;
-
     public function __construct()
     {
         $this->inventory = new ArrayCollection();
@@ -200,35 +197,4 @@ class Member
         return $tapes;
     }
 
-    public function hasLikedTape(Tape $tape): bool
-    {
-        return $this->tapesLiked->contains($tape);
-    }
-
-    /**
-     * @return Collection<int, Tape>
-     */
-    public function getTapesLiked(): Collection
-    {
-        return $this->tapesLiked;
-    }
-
-    public function addTapesLiked(Tape $tapesLiked): static
-    {
-        if (!$this->tapesLiked->contains($tapesLiked)) {
-            $this->tapesLiked->add($tapesLiked);
-            $tapesLiked->addMemberLike($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTapesLiked(Tape $tapesLiked): static
-    {
-        if ($this->tapesLiked->removeElement($tapesLiked)) {
-            $tapesLiked->removeMemberLike($this);
-        }
-
-        return $this;
-    }
 }

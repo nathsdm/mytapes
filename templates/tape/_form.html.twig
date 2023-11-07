@@ -1,4 +1,14 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_errors(form) }}
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.name) }}
+            {{ form_row(form.imageFile) }}
+            {{ form_row(form.isPublic) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.artist) }}
+            {{ form_row(form.year) }}
+        </div>
+    </div>
 {{ form_end(form) }}

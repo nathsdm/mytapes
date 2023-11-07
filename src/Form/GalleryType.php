@@ -11,16 +11,28 @@ class GalleryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $member = $options['member'];
         $builder
+            ->add('name')
             ->add('description')
             ->add('published')
-            ->add('Member')
-            ->add('tapes')
+            ->add(
+                'tapes',
+                null,
+                [
+                    'choices' => $member->getTapes(),
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'by_reference' => false,
+                ]
+            )
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setRequired('member');
         $resolver->setDefaults([
             'data_class' => Gallery::class,
         ]);

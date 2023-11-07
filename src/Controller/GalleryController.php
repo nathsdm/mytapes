@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Gallery;
 use App\Form\GalleryType;
 use App\Repository\GalleryRepository;
+use App\Entity\Member;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +26,12 @@ class GalleryController extends AbstractController
     #[Route('/new', name: 'app_gallery_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $memberId = $request->query->get('memberId');
+        $member = $entityManager->getRepository(Member::class)->find($memberId);
         $gallery = new Gallery();
-        $form = $this->createForm(GalleryType::class, $gallery);
+        $form = $this->createForm(GalleryType::class, $gallery, [
+            'member' => $member,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,5 +82,15 @@ class GalleryController extends AbstractController
         }
 
         return $this->redirectToRoute('app_gallery_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/publish', name: 'app_gallery_publish', methods: ['POST'])]
+    public function publish(Request $request, Gallery $gallery, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+        $gallery->setPublished($data['published']);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_profile_show', [], Response::HTTP_SEE_OTHER);
     }
 }

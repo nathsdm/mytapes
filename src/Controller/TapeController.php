@@ -24,21 +24,15 @@ class TapeController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $tape = $entityManager->getRepository(Tape::class)->find($id);
-        $member = $this->getUser()->getMember($doctrine);
+        $memberId = $this->getUser()->getMember($doctrine)->getId();
 
         // Retrieve the $page and $id_page parameters from the Request object
         $page = $request->query->get('page');
         $id_page = $request->query->get('id_page');
 
-        // Use the $page and $id_page variables to generate the route name for the back link
-        $backRoute = 'app_' . $page . '_show';
-        $backRouteParams = ['id' => $id_page];
-
         return $this->render('tape/show.html.twig', [
             'Tape' => $tape,
-            'back_route' => $backRoute,
-            'back_route_params' => $backRouteParams,
-            'user_has_liked_tape' => $member->hasLikedTape($tape),
+            'user_has_liked_tape' => $tape->isLikedByMember($memberId),
         ]);
     }
 
@@ -122,7 +116,7 @@ class TapeController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $tape->setLikes($tape->getLikes() + 1);
-        $tape->addMemberLike($this->getUser()->getMember($doctrine));
+        $tape->addMemberLike($this->getUser()->getMember($doctrine)->getId());
         $entityManager->flush();
 
         return $this->redirectToRoute('tape_show', ['id' => $tape->getId(), 'page' => 'profile'], Response::HTTP_SEE_OTHER);
@@ -133,7 +127,7 @@ class TapeController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $tape->setLikes($tape->getLikes() - 1);
-        $tape->removeMemberLike($this->getUser()->getMember($doctrine));
+        $tape->removeMemberLike($this->getUser()->getMember($doctrine)->getId());
         $entityManager->flush();
 
         return $this->redirectToRoute('tape_show', ['id' => $tape->getId(), 'page' => 'profile'], Response::HTTP_SEE_OTHER);
