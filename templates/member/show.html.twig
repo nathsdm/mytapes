@@ -1,11 +1,86 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ member.name }}'s Profile{% endblock %}
+
 {% block body %}
-    <h1>Member {{ member.id }}</h1>
-    <h2>Name: {{ member.name }}</h2>
-    <h2>Birth: {{ member.birth }}</h2>
-    {% for inventory in member.inventory %}
-        <li><a href="{{ path('app_inventory_show', {'id' : inventory.id}) }}">{{ inventory }}</a></li>
-    {% endfor %}
-    <a href="{{ path('app_inventory_new', {'id': member.id}) }}">add new inventory</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{ member.name }}</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if member.user.hasRole('ROLE_ADMIN') %}
+                            <p><strong>Role:</strong> Admin</p>
+                        {% endif %}
+                        <p><strong>Joined:</strong> {{ member.creation|date('F j, Y') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class='card'>
+                    <div class="card-header">
+                        <h3 class="card-title">{{ member.name }}'s Tapes</h3>
+                    </div>
+                    <div class="card-body">
+                        {% for inventory in member.inventory %}
+                            {% if inventory.tapes|length > 0 %}
+                                <h4>{{ inventory.name }}</h4>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Artist</th>
+                                            <th>Year</th>
+                                            <th>Likes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for tape in inventory.tapes %}
+                                            <tr>
+                                                <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page':'profile', 'id_page':-1 }) }}">{{ tape.name }}</a> </td>
+                                                <td>{{ tape.artist }}</td>
+                                                <td>{{ tape.year }}</td>
+                                                <td>{{ tape.likes }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p>{{ inventory.name }} is empty</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class='card' style="margin-top: 20px">
+                    <div class="card-header">
+                        <h3 class="card-title">My galleries</h3>
+                    </div>
+                    <div class="card-body">
+                        {% for gallery in member.galleries %}
+                        {% if gallery.isPublished %}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> <a href="{{ path('app_gallery_show', { 'id': gallery.id }) }}">{{ gallery.name }}</a> </td>
+                                        <td>{{ gallery.description }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        {% endif %}
+                        {% else %}
+                            <p>No gallery</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -235,6 +235,7 @@ class Tape
     {
         if (!$this->memberLikes->contains($memberId)) {
             $this->memberLikes->add($memberId);
+            $this->setLikes($this->getLikes() + 1);
         }
 
         return $this;
@@ -244,14 +245,15 @@ class Tape
     {
         if ($this->memberLikes->contains($memberId)) {
             $this->memberLikes->removeElement($memberId);
+            $this->setLikes($this->getLikes() - 1);
         }
 
         return $this;
     }
 
-    public function isLikedByMember(int $memberId): bool
+    public function isLikedByMember(int $userId): bool
     {
-        return $this->memberLikes->contains($memberId);
+        return $this->memberLikes->contains($userId);
     }
 
 }

@@ -115,7 +115,6 @@ class TapeController extends AbstractController
     public function likes(Request $request, Tape $tape, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
-        $tape->setLikes($tape->getLikes() + 1);
         $tape->addMemberLike($this->getUser()->getMember($doctrine)->getId());
         $entityManager->flush();
 
@@ -126,7 +125,6 @@ class TapeController extends AbstractController
     public function dislikes(Request $request, Tape $tape, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
-        $tape->setLikes($tape->getLikes() - 1);
         $tape->removeMemberLike($this->getUser()->getMember($doctrine)->getId());
         $entityManager->flush();
 
