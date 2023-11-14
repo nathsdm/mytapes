@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Inventory;
 use App\Entity\Tape;
-use App\Entity\Member;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
