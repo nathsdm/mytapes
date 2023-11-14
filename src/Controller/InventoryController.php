@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Inventory;
 use App\Entity\Member;
+use App\Entity\Tape;
 use App\Form\InventoryType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,58 +25,7 @@ use Doctrine\Persistence\ManagerRegistry;
 #[Route('/inventory')]
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class InventoryController extends AbstractController
-{    
-    #[Route('/', name: 'home', methods: ['GET'])]
-    public function indexAction()
-    {
-        
-        return $this->render('index.html.twig',
-                [ 'welcome' => 'welcome' ]);
-    }
-
-    #[Route('/new', name: 'app_inventory_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $memberId = $request->query->get('memberId');
-        $member = $entityManager->getRepository(Member::class)->find($memberId);
-        
-        $inventory = new Inventory();
-        $form = $this->createForm(InventoryType::class, $inventory, [
-            'member' => $member,
-        ]);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $inventory->setMember($member);
-            $member->addInventory($inventory);
-            $entityManager->persist($inventory);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('inventory_list', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('inventory/new.html.twig', [
-            'inventory' => $inventory,
-            'form' => $form->createView(),
-        ]);
-    }
-    
-    /**
-     * Lists all inventories entities.
-     */
-    #[Route('/list', name: 'inventory_list', methods: ['GET'])]
-    public function listAction(ManagerRegistry $doctrine)
-    {
-        $entityManager= $doctrine->getManager();
-        $inventories = $entityManager->getRepository(Inventory::class)->findAll();
-
-        // dump($todos);
-
-        return $this->render('inventory/index.html.twig',
-                [ 'inventories' => $inventories ]
-                );
-    }
-
+{
     /**
      * Show an inventory
      *
@@ -102,15 +52,15 @@ class InventoryController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_inventory_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Inventory $inventory, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Inventory $inventory, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
-        $form = $this->createForm(InventoryType::class, $inventory);
+        $form = $this->createForm(InventoryType::class, $inventory, ['member' => $this->getUser()->getMember($doctrine)]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('inventory_list', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_profile_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('inventory/edit.html.twig', [
@@ -127,6 +77,6 @@ class InventoryController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('inventory_list', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_profile_show', [], Response::HTTP_SEE_OTHER);
     }
 }

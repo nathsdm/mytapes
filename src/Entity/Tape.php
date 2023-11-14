@@ -54,12 +54,12 @@ class Tape
     private ?int $likes = 0;
 
     #[ORM\Column(type: 'array', nullable: true)]
-    private Collection $memberLikes;
+    private ?array $memberLikes = null;
 
     public function __construct()
     {
         $this->galleries = new ArrayCollection();
-        $this->memberLikes = new ArrayCollection();
+        $this->memberLikes = [];
     }
 
     public function __toString(): string
@@ -224,17 +224,17 @@ class Tape
     }
 
     /**
-     * @return Collection<int, Member>
+     * @return array<int>
      */
-    public function getMemberLikes(): Collection
+    public function getMemberLikes(): array
     {
         return $this->memberLikes;
     }
 
     public function addMemberLike(int $memberId): static
     {
-        if (!$this->memberLikes->contains($memberId)) {
-            $this->memberLikes->add($memberId);
+        if (!in_array($memberId, $this->memberLikes)) {
+            $this->memberLikes[] = $memberId;
             $this->setLikes($this->getLikes() + 1);
         }
 
@@ -243,8 +243,8 @@ class Tape
 
     public function removeMemberLike(int $memberId): static
     {
-        if ($this->memberLikes->contains($memberId)) {
-            $this->memberLikes->removeElement($memberId);
+        if (($key = array_search($memberId, $this->memberLikes)) !== false) {
+            unset($this->memberLikes[$key]);
             $this->setLikes($this->getLikes() - 1);
         }
 
@@ -253,7 +253,7 @@ class Tape
 
     public function isLikedByMember(int $userId): bool
     {
-        return $this->memberLikes->contains($userId);
+        return in_array($userId, $this->memberLikes);
     }
 
 }

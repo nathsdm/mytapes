@@ -16,9 +16,9 @@
             <h2>Featured Tapes</h2>
             <p>Check out some of our most popular tapes:</p>
             <ul>
-                <li><a href="#">Thriller - Michael Jackson</a></li>
-                <li><a href="#">Purple Rain - Prince</a></li>
-                <li><a href="#">The Joshua Tree - U2</a></li>
+                {% for tape in tapes %}
+                    <li><a href="{{ path('tape_show', {'id': tape.id}) }}">{{ tape.name }}</a></li>
+                {% endfor %}
             </ul>
         </div>
         <div class="col-md-4">

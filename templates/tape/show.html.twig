@@ -11,7 +11,7 @@
             <div class="col-md-6">
                 <h1 class="display-4">{{ Tape.name }}</h1>
                 <p class="lead">{{ Tape.artist }} - {{ Tape.year }}</p>
-                <p class="lead"> {{ Tape.likes }} likes</p>
+                <p class="lead" id="likeText"> {{ Tape.likes }} likes</p>
                 {% if user_has_liked_tape %}
                     <form method="POST" action="{{ path('app_tape_dislike', {'id': Tape.id}) }}">
                         <button type="submit" class="btn btn-primary" id="likeButton" onclick="submitForm()">Dislike</button>
@@ -41,6 +41,15 @@
             
             // Submit the form
             document.getElementById("likeButton").form.submit();
+
+            // Update the user interface immediately
+            var likesCountElement = document.getElementById("likeText");
+            var likesCount = parseInt(likesCountElement.textContent, 10);
+            if (document.getElementById("likeButton").textContent == "Like") {
+                likesCountElement.textContent = (likesCount + 1) + " likes";
+            } else {
+                likesCountElement.textContent = (likesCount - 1) + " likes";
+            }
         }
     </script>
 {% endblock %}

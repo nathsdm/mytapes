@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d220f907168923de2e68c429c72dcb9d",
+    "content-hash": "5755330eb728fc4a3bcd27c906cb3104",
     "packages": [
         {
             "name": "camurphy/bootstrap-menu-bundle",
@@ -1375,16 +1375,16 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.7.7",
+            "version": "v4.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "7561f781aa8ac7852a18938711052fffb641005c"
+                "reference": "26dd37b193d061cc07eeaa51679509aa9cef1288"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/7561f781aa8ac7852a18938711052fffb641005c",
-                "reference": "7561f781aa8ac7852a18938711052fffb641005c",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/26dd37b193d061cc07eeaa51679509aa9cef1288",
+                "reference": "26dd37b193d061cc07eeaa51679509aa9cef1288",
                 "shasum": ""
             },
             "require": {
@@ -1392,40 +1392,40 @@
                 "doctrine/orm": "^2.10",
                 "ext-json": "*",
                 "php": ">=8.0.2",
-                "symfony/asset": "^5.4|^6.0",
-                "symfony/cache": "^5.4|^6.0",
-                "symfony/config": "^5.4|^6.0",
-                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/asset": "^5.4|^6.0|^7.0",
+                "symfony/cache": "^5.4|^6.0|^7.0",
+                "symfony/config": "^5.4|^6.0|^7.0",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
                 "symfony/deprecation-contracts": "^3.0",
-                "symfony/doctrine-bridge": "^5.4|^6.0",
-                "symfony/event-dispatcher": "^5.4|^6.0",
-                "symfony/filesystem": "^5.4|^6.0",
-                "symfony/form": "^5.4|^6.0",
-                "symfony/framework-bundle": "^5.4|^6.0",
-                "symfony/http-foundation": "^5.4|^6.0",
-                "symfony/http-kernel": "^5.4|^6.0",
-                "symfony/intl": "^5.4|^6.0",
-                "symfony/property-access": "^5.4|^6.0",
-                "symfony/security-bundle": "^5.4|^6.0",
-                "symfony/string": "^5.4|^6.0",
-                "symfony/translation": "^5.4|^6.0",
-                "symfony/twig-bundle": "^5.4|^6.0",
-                "symfony/uid": "^5.4|^6.0",
-                "symfony/validator": "^5.4|^6.0"
+                "symfony/doctrine-bridge": "^5.4|^6.0|^7.0",
+                "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
+                "symfony/filesystem": "^5.4|^6.0|^7.0",
+                "symfony/form": "^5.4|^6.0|^7.0",
+                "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+                "symfony/http-foundation": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4|^6.0|^7.0",
+                "symfony/intl": "^5.4|^6.0|^7.0",
+                "symfony/property-access": "^5.4|^6.0|^7.0",
+                "symfony/security-bundle": "^5.4|^6.0|^7.0",
+                "symfony/string": "^5.4|^6.0|^7.0",
+                "symfony/translation": "^5.4|^6.0|^7.0",
+                "symfony/twig-bundle": "^5.4|^6.0|^7.0",
+                "symfony/uid": "^5.4|^6.0|^7.0",
+                "symfony/validator": "^5.4|^6.0|^7.0"
             },
             "require-dev": {
-                "doctrine/doctrine-fixtures-bundle": "^3.4",
+                "doctrine/doctrine-fixtures-bundle": "^3.4|3.5.x-dev",
                 "phpstan/extension-installer": "^1.2",
                 "phpstan/phpstan": "^1.9",
                 "phpstan/phpstan-phpunit": "^1.2",
                 "phpstan/phpstan-strict-rules": "^1.4",
                 "phpstan/phpstan-symfony": "^1.2",
                 "psr/log": "^1.0",
-                "symfony/browser-kit": "^5.4|^6.0",
-                "symfony/css-selector": "^5.4|^6.0",
-                "symfony/debug-bundle": "^5.4|^6.0",
-                "symfony/dom-crawler": "^5.4|^6.0",
-                "symfony/phpunit-bridge": "^5.4|^6.0"
+                "symfony/browser-kit": "^5.4|^6.0|^7.0",
+                "symfony/css-selector": "^5.4|^6.0|^7.0",
+                "symfony/debug-bundle": "^5.4|^6.0|^7.0",
+                "symfony/dom-crawler": "^5.4|^6.0|^7.0",
+                "symfony/phpunit-bridge": "^5.4|^6.0|^7.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -1457,7 +1457,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.7.7"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.8.5"
             },
             "funding": [
                 {
@@ -1465,7 +1465,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-09-19T18:35:59+00:00"
+            "time": "2023-11-13T11:53:50+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -6908,16 +6908,16 @@
         },
         {
             "name": "symfony/uid",
-            "version": "v6.3.0",
+            "version": "v6.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/uid.git",
-                "reference": "01b0f20b1351d997711c56f1638f7a8c3061e384"
+                "reference": "819fa5ac210fb7ddda4752b91a82f50be7493dd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/uid/zipball/01b0f20b1351d997711c56f1638f7a8c3061e384",
-                "reference": "01b0f20b1351d997711c56f1638f7a8c3061e384",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/819fa5ac210fb7ddda4752b91a82f50be7493dd9",
+                "reference": "819fa5ac210fb7ddda4752b91a82f50be7493dd9",
                 "shasum": ""
             },
             "require": {
@@ -6962,7 +6962,7 @@
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/uid/tree/v6.3.0"
+                "source": "https://github.com/symfony/uid/tree/v6.3.8"
             },
             "funding": [
                 {
@@ -6978,7 +6978,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-04-08T07:25:02+00:00"
+            "time": "2023-10-31T08:07:48+00:00"
         },
         {
             "name": "symfony/validator",

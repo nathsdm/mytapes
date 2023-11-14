@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/gallery')]
 class GalleryController extends AbstractController
 {
-    #[Route('/', name: 'app_gallery_index', methods: ['GET'])]
+    #[Route('', name: 'app_gallery_index', methods: ['GET'])]
     public function index(GalleryRepository $galleryRepository): Response
     {
         return $this->render('gallery/index.html.twig', [

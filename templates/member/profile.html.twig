@@ -38,7 +38,7 @@
                                     <tbody>
                                         {% for tape in inventory.tapes %}
                                             <tr>
-                                                <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page':'profile', 'id_page':-1 }) }}">{{ tape.name }}</a> </td>
+                                                <td> <a href="{{ path('tape_show', { 'id': tape.id }) }}">{{ tape.name }}</a> </td>
                                                 <td>{{ tape.artist }}</td>
                                                 <td>{{ tape.year }}</td>
                                                 <td>{{ tape.likes }}</td>
@@ -51,6 +51,7 @@
                             {% endif %}
                         {% endfor %}
                         <a href="{{ path('app_tape_new', {'memberId': member.id}) }}" class="btn btn-primary float-right">New Tape</a>
+                        <a href="{{ path('app_inventory_edit', {'id': member.inventory[0].id}) }}" class="btn btn-primary float-right" style="margin-right: 10px">Edit Inventory</a>
                     </div>
                 </div>
                 <div class='card' style="margin-top: 20px">

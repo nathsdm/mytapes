@@ -19,16 +19,12 @@ class TapeController extends AbstractController
      * Show an inventory tape
      * @param Integer $id (note that the id must be an integer)
      */
-    #[Route('tape/{id}', name: 'tape_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route('/{id}', name: 'tape_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Request $request, ManagerRegistry $doctrine, $id)
     {
         $entityManager = $doctrine->getManager();
         $tape = $entityManager->getRepository(Tape::class)->find($id);
         $memberId = $this->getUser()->getMember($doctrine)->getId();
-
-        // Retrieve the $page and $id_page parameters from the Request object
-        $page = $request->query->get('page');
-        $id_page = $request->query->get('id_page');
 
         return $this->render('tape/show.html.twig', [
             'Tape' => $tape,
@@ -106,19 +102,15 @@ class TapeController extends AbstractController
         return $this->redirectToRoute('app_profile_show', [], Response::HTTP_SEE_OTHER);
     }
 
-    private function generateUniqueFileName()
-    {
-        return md5(uniqid());
-    }
-
     #[Route('/{id}/likes', name: 'app_tape_like', methods: ['GET', 'POST'])]
     public function likes(Request $request, Tape $tape, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
-        $tape->addMemberLike($this->getUser()->getMember($doctrine)->getId());
+        $userId = $this->getUser()->getMember($doctrine)->getId();
+        $tape->addMemberLike($userId);
         $entityManager->flush();
 
-        return $this->redirectToRoute('tape_show', ['id' => $tape->getId(), 'page' => 'profile'], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('tape_show', ['id' => $tape->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}/dislikes', name: 'app_tape_dislike', methods: ['GET', 'POST'])]
@@ -128,6 +120,6 @@ class TapeController extends AbstractController
         $tape->removeMemberLike($this->getUser()->getMember($doctrine)->getId());
         $entityManager->flush();
 
-        return $this->redirectToRoute('tape_show', ['id' => $tape->getId(), 'page' => 'profile'], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('tape_show', ['id' => $tape->getId()], Response::HTTP_SEE_OTHER);
     }
 }

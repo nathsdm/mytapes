@@ -1,10 +1,9 @@
 {# templates/admin/dashboard.html.twig #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% extends '@EasyAdmin/layout.html.twig' %}
-
-{% block body %}
+{% block content %}
     <div class="content">
-        <div class="row">
+        <div class="row" style="margin-bottom: 20px; margin-top: 20px;">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
@@ -12,6 +11,18 @@
                     </div>
                     <div class="card-body">
                         <p>There are {{ memberCount }} members in the database.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tapes</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>There are {{ tapeCount }} tapes in the database.</p>
                     </div>
                 </div>
             </div>
