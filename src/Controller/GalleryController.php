@@ -58,7 +58,9 @@ class GalleryController extends AbstractController
     #[Route('/{id}/edit', name: 'app_gallery_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Gallery $gallery, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(GalleryType::class, $gallery);
+        $form = $this->createForm(GalleryType::class, $gallery, [
+            'member' => $gallery->getMember(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

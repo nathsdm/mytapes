@@ -102,7 +102,7 @@ class TapeController extends AbstractController
         return $this->redirectToRoute('app_profile_show', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/likes', name: 'app_tape_like', methods: ['GET', 'POST'])]
+    #[Route('/{id}/likes', name: 'app_tape_like', methods: ['POST'])]
     public function likes(Request $request, Tape $tape, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
@@ -113,7 +113,7 @@ class TapeController extends AbstractController
         return $this->redirectToRoute('tape_show', ['id' => $tape->getId()], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{id}/dislikes', name: 'app_tape_dislike', methods: ['GET', 'POST'])]
+    #[Route('/{id}/dislikes', name: 'app_tape_dislike', methods: ['POST'])]
     public function dislikes(Request $request, Tape $tape, ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();

@@ -2,18 +2,53 @@
 
 {% block title %}Register{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <style>
+        form {
+            padding: 20px;
+            margin: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        input[type="submit"] {
+            background-color: #0d6efd;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: #0a58ca;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <h1>Register</h1>
+    <h1 style="margin: 10px">Register</h1>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.name) }}
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <input type="submit" value="Register" style="margin-top: 10px;">
     {{ form_end(registrationForm) }}
 {% endblock %}

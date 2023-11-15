@@ -28,7 +28,7 @@
             </tbody>
       </table>
 
-    <a href="{{ path('inventory_list') }}">Back to the list</a>
+      <button onclick="history.back()" class="btn btn-secondary">back</button>
 
     {{ include('inventory/_delete_form.html.twig') }}
 {% endblock %}

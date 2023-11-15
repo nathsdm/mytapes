@@ -10,11 +10,20 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class AppFixtures extends Fixture implements DependentFixtureInterface
 {
     private const SEB_INVENTORY = 'seb-inventory';
     private const OLIVIER_INVENTORY = 'olivier-inventory';
+
+    private $projectDir;
+
+    public function __construct(KernelInterface $kernel)
+        {
+            $this->projectDir = $kernel->getProjectDir();
+        }
 
     /**
      * Generates initialization data for members
@@ -74,6 +83,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'inventory' => self::SEB_INVENTORY,
                 'isPublic' => true,
                 'likes' => 10,
+                'image' => '\public\images\tapes\tape1.jpg'
             ];
             yield [
                 'name' => 'The Wall',
@@ -82,6 +92,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'inventory' => self::SEB_INVENTORY,
                 'isPublic' => true,
                 'likes' => 5,
+                'image' => '\public\images\tapes\tape2.jpg'
             ];
             yield [
                 'name' => 'The Division Bell',
@@ -90,6 +101,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'inventory' => self::SEB_INVENTORY,
                 'isPublic' => false,
                 'likes' => 1,
+                'image' => '\public\images\tapes\tape3.png'
             ];
             yield [
                 'name' => 'エコーチャンバーパーティー',
@@ -98,6 +110,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'inventory' => self::OLIVIER_INVENTORY,
                 'isPublic' => true,
                 'likes' => 398,
+                'image' => '\public\images\tapes\tape4.png'
             ];
         }
 
@@ -162,6 +175,13 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 $tape->setIsPublic($tapeData['isPublic']);
                 $tape->setLikes($tapeData['likes']);
                 $tape->setInventory($this->getReference($tapeData['inventory']));
+                if(isset($tapeData['image'])) {
+                    $imagePath = $this->projectDir . $tapeData['image'];
+                    $tape->setImageFile(new File($imagePath));
+                    $tape->setImageName(basename($imagePath));
+                    $tape->setImageSize(filesize($imagePath));
+                    $tape->setContentType(mime_content_type($imagePath));
+                }
                 $manager->persist($tape);
             }
             $manager->flush();

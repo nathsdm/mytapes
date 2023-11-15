@@ -7,6 +7,6 @@
 
     {{ include('inventory/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ app.request.headers.get('referer') }}">Back</a>
+    <button onclick="history.back()" class="btn btn-secondary">back</button>
     
 {% endblock %}

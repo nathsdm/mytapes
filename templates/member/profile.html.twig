@@ -12,7 +12,6 @@
                     </div>
                     <div class="card-body">
                         <p><strong>Email:</strong> {{ member.user.email }}</p>
-                        <p><strong>Password:</strong> <span id="password" style="display:none">{{ member.user.password }}</span><button id="show-password" class="btn btn-primary btn-sm">Show</button></p>
                         <p><strong>Joined:</strong> {{ member.creation|date('F j, Y') }}</p>
                     </div>
                 </div>
@@ -100,16 +99,6 @@
                     body: JSON.stringify({ published: this.checked }),
                     headers: { 'Content-Type': 'application/json' }
                 });
-            });
-        });
-        $(document).ready(function() {
-            $('#show-password').click(function() {
-                $('#password').toggle();
-                if ($('#password').is(':visible')) {
-                    $(this).text('Hide');
-                } else {
-                    $(this).text('Show');
-                }
             });
         });
     </script>

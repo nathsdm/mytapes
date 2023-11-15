@@ -19,6 +19,7 @@ class InventoryType extends AbstractType
                 'tapes',
                 null,
                 [
+                    'class' => Tape::class,
                     'choices' => $member->getTapes(),
                     'choice_label' => 'name',
                     'multiple' => true,

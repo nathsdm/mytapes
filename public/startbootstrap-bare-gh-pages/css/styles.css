@@ -10824,3 +10824,12 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+.card-group a {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.card-group button {
+  margin-right: 5px;
+  margin-left: 5px;
+}

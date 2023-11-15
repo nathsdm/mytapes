@@ -13,22 +13,24 @@
                 <p class="lead">{{ Tape.artist }} - {{ Tape.year }}</p>
                 <p class="lead" id="likeText"> {{ Tape.likes }} likes</p>
                 {% if user_has_liked_tape %}
-                    <form method="POST" action="{{ path('app_tape_dislike', {'id': Tape.id}) }}">
-                        <button type="submit" class="btn btn-primary" id="likeButton" onclick="submitForm()">Dislike</button>
-                    </form>
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-heart-fill" id="likeIcon" style="color:red; font-size: 1.5em; padding: 0 10px;"></i>
+                        <button class="btn btn-primary" id="likeButton" onclick="dislikeTape2({{ Tape.id }})" style="width: 80px;">Dislike</button>
+                    </div>
                 {% else %}
-                    <form method="POST" action="{{ path('app_tape_like', {'id': Tape.id}) }}">
-                        <button type="submit" class="btn btn-primary" id="likeButton" onclick="submitForm()">Like</button>
-                    </form>
-                {% endif %}
-                <hr class="my-4">
-                {% if app.user and Tape.inventory.member.User == app.user %}
-                <div class="btn-group">
-                    <a href="{{ path('app_tape_edit', {'id': Tape.id}) }}" class="btn btn-primary">Edit</a>
-                    {{ include('tape/_delete_form.html.twig') }}
+                    <div style="display: flex; align-items: center;">
+                        <i class="bi bi-heart" id="likeIcon" style="color:red; font-size: 1.5em; padding: 0 10px;"></i>
+                        <button class="btn btn-primary" id="likeButton" onclick="likeTape1({{ Tape.id }})" style="width: 80px;">Like</button>
                     </div>
                 {% endif %}
-                <button onclick="history.back()" class="btn btn-secondary">back</button>
+                <hr class="my-4">
+                <div class="card-group">
+                    {% if app.user and Tape.inventory.member.User == app.user %}
+                    <a href="{{ path('app_tape_edit', {'id': Tape.id}) }}" class="btn btn-primary">edit</a>
+                    {{ include('tape/_delete_form.html.twig') }}
+                    {% endif %}
+                    <button onclick="history.back()" class="btn btn-secondary">back</button>
+                </div>                
             </div>
         </div>
     </div>
@@ -36,20 +38,55 @@
 
 {% block javascripts %}
     <script>
-        function submitForm() {
-            document.getElementById("likeButton").disabled = true;
-            
-            // Submit the form
-            document.getElementById("likeButton").form.submit();
+        let icon = document.querySelector('ion-icon');
+        icon.onclick = function(){
+            icon.classList.toggle('active');
+        }
 
-            // Update the user interface immediately
-            var likesCountElement = document.getElementById("likeText");
-            var likesCount = parseInt(likesCountElement.textContent, 10);
-            if (document.getElementById("likeButton").textContent == "Like") {
-                likesCountElement.textContent = (likesCount + 1) + " likes";
-            } else {
-                likesCountElement.textContent = (likesCount - 1) + " likes";
-            }
+        function likeTape1(tapeId) {
+            fetch(`/tape/${tapeId}/likes`, {
+                method: 'POST',
+            }).then(
+                document.getElementById('likeButton').innerHTML = 'Dislike',
+                document.getElementById('likeIcon').className = 'bi bi-heart-fill',
+                document.getElementById('likeIcon').style.color = 'red',
+                document.getElementById('likeButton').onclick = function() { dislikeTape1(tapeId) },
+                document.getElementById('likeText').innerHTML = '{{ Tape.likes + 1 }} likes'
+            );
+        }
+        
+        function dislikeTape1(tapeId) {
+            fetch(`/tape/${tapeId}/dislikes`, {
+                method: 'POST',
+            }).then(
+                document.getElementById('likeButton').innerHTML = 'Like',
+                document.getElementById('likeIcon').className = 'bi bi-heart',
+                document.getElementById('likeButton').onclick = function() { likeTape1(tapeId) },
+                document.getElementById('likeText').innerHTML = '{{ Tape.likes }} likes'
+            );
+        }
+
+        function likeTape2(tapeId) {
+            fetch(`/tape/${tapeId}/likes`, {
+                method: 'POST',
+            }).then(
+                document.getElementById('likeButton').innerHTML = 'Dislike',
+                document.getElementById('likeIcon').className = 'bi bi-heart-fill',
+                document.getElementById('likeIcon').style.color = 'red',
+                document.getElementById('likeButton').onclick = function() { dislikeTape2(tapeId) },
+                document.getElementById('likeText').innerHTML = '{{ Tape.likes }} likes'
+            );
+        }
+        
+        function dislikeTape2(tapeId) {
+            fetch(`/tape/${tapeId}/dislikes`, {
+                method: 'POST',
+            }).then(
+                document.getElementById('likeButton').innerHTML = 'Like',
+                document.getElementById('likeIcon').className = 'bi bi-heart',
+                document.getElementById('likeButton').onclick = function() { likeTape2(tapeId) },
+                document.getElementById('likeText').innerHTML = '{{ Tape.likes - 1 }} likes'
+            );
         }
     </script>
 {% endblock %}

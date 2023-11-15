@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\Member;
+use App\Entity\Inventory;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,13 +36,18 @@ class RegistrationController extends AbstractController
             $member->setName($form->get('name')->getData());
             $member->setUser($user);
             $member->setCreation(new \DateTime());
+            $inventory = new Inventory();
+            $inventory->setName('Inventory');
+            $inventory->setMember($member);
+            $member->addInventory($inventory);
+
+            $entityManager->persist($inventory);
             $entityManager->persist($member);
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_profile_show');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [

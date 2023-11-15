@@ -15,6 +15,7 @@
                             <p><strong>Role:</strong> Admin</p>
                         {% endif %}
                         <p><strong>Joined:</strong> {{ member.creation|date('F j, Y') }}</p>
+                        <button onclick="history.back()" class="btn btn-secondary">back</button>
                     </div>
                 </div>
             </div>
@@ -38,12 +39,14 @@
                                     </thead>
                                     <tbody>
                                         {% for tape in inventory.tapes %}
-                                            <tr>
-                                                <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page':'profile', 'id_page':-1 }) }}">{{ tape.name }}</a> </td>
-                                                <td>{{ tape.artist }}</td>
-                                                <td>{{ tape.year }}</td>
-                                                <td>{{ tape.likes }}</td>
-                                            </tr>
+                                            {% if tape.isPublic == true %}
+                                                <tr>
+                                                    <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page':'profile', 'id_page':-1 }) }}">{{ tape.name }}</a> </td>
+                                                    <td>{{ tape.artist }}</td>
+                                                    <td>{{ tape.year }}</td>
+                                                    <td>{{ tape.likes }}</td>
+                                                </tr>
+                                            {% endif %}
                                         {% endfor %}
                                     </tbody>
                                 </table>
