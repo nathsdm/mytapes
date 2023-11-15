@@ -112,6 +112,33 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'likes' => 398,
                 'image' => '\public\images\tapes\tape4.png'
             ];
+            yield [
+                'name' => 'Floral Shoppe',
+                'artist' => 'Macintosh Plus',
+                'year' => 2011,
+                'inventory' => self::NATHAN_INVENTORY,
+                'isPublic' => true,
+                'likes' => 986,
+                'image' => '\public\images\tapes\tape5.png'
+            ];
+            yield [
+                'name' => 'For you',
+                'artist' => 'Tatsuro Yamashita',
+                'year' => 1982,
+                'inventory' => self::NATHAN_INVENTORY,
+                'isPublic' => true,
+                'likes' => 762,
+                'image' => '\public\images\tapes\tape6.jpg'
+            ];
+            yield [
+                'name' => 'Adventure',
+                'artist' => 'Momoko Kikuchi',
+                'year' => 1986,
+                'inventory' => self::NATHAN_INVENTORY,
+                'isPublic' => true,
+                'likes' => 123,
+                'image' => '\public\images\tapes\tape7.png'
+            ];
         }
 
     /**
@@ -137,6 +164,17 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'member' => 'Nathan',
                 'tapes' => [
                     'エコーチャンバーパーティー',
+                    'Floral Shoppe',
+                ],
+            ];
+            yield [
+                'name' => 'Japanese pop',
+                'description' => 'The best of my japanese pop tapes',
+                'published' => false,
+                'member' => 'Nathan',
+                'tapes' => [
+                    'For you',
+                    'Adventure',
                 ],
             ];
         }

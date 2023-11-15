@@ -75,7 +75,7 @@ Nathan:
 Each user has several tapes and galleries:
 
 - Seb has 3 tapes (2 public and 1 private) and 1 gallery.
-- Nathan has 1 tape (public) and 1 gallery.
+- Nathan has 4 tapes (public) and 2 galleries.
 
 Test the application with these users to see the different features. For example, you can try to log in with Seb and Nathan to see the difference between a user and an admin. The role admin has access to the CRUD of the entities and to a dashboard (http://localhost:8000/admin). The role user has access to the profiles of the users and to his own profile (http://localhost:8000/profile). These links are protected. If you try to access them without being logged in, you will be redirected to the login page.
 Concerning the entity that should have a complete front end CRUD, it's in my case the entity gallery. It is more interesting to have a CRUD on the gallery entity because it is the entity that contains the tapes and that the user can share with others. Moreover, he can create multiple galleries to organize his tapes.
