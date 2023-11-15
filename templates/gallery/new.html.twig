@@ -2,10 +2,63 @@
 
 {% block title %}New Gallery{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        label {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 0.5rem;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        a {
+            font-size: 1.5rem;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <h1>Create new Gallery</h1>
 
     {{ include('gallery/_form.html.twig') }}
 
-    <a href="{{ app.request.headers.get('referer') }}">Back</a>
+    <a href="#" onclick="history.back()" class="btn btn-secondary mt-3">Back</a>
 {% endblock %}

@@ -3,10 +3,15 @@
 {% block title %}Edit Inventory{% endblock %}
 
 {% block body %}
-    <h1>Edit Inventory</h1>
+    <div class="container">
+        <h1 class="text-center">Edit Inventory</h1>
 
-    {{ include('inventory/_form.html.twig', {'button_label': 'Update'}) }}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {{ include('inventory/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <button onclick="history.back()" class="btn btn-secondary">back</button>
-    
+                <a href="#" onclick="history.back()" class="btn btn-secondary mt-3">Back</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
