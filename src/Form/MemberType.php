@@ -2,28 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Tape;
-use Vich\UploaderBundle\Form\Type\VichImageType;
+use App\Entity\Member;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TapeType extends AbstractType
+class MemberType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('year')
             ->add('name')
-            ->add('artist')
-            ->add('imageFile', VichImageType::class, ['required' => false])
-        ;
+            ->add('bio')
+            ->add('birth', DateType::class, [
+                'years' => range(1930, 2023),
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Tape::class,
+            'data_class' => Member::class,
         ]);
     }
 }

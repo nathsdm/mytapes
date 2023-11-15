@@ -32,6 +32,7 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/member, roles: ROLE_USER }
         - { path: ^/tape, roles: ROLE_USER }
+        - { path: ^/profile, roles: ROLE_USER }
 
     access_denied_url: /home/accessdenied
 

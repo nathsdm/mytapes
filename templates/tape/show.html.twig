@@ -28,13 +28,13 @@
                     {% endif %}
                 {% endif %}
                 <hr class="my-4">
-                <form>
-                    {% if app.user and Tape.inventory.member.User == app.user %}
+                {% if app.user and Tape.inventory.member.User == app.user %}
                     <a href="{{ path('app_tape_edit', {'id': Tape.id}) }}" class="btn btn-primary">edit</a>
+                {% endif %}
+                <button onclick="history.back()" class="btn btn-secondary">back</button>        
+                {% if app.user and Tape.inventory.member.User == app.user %}
                     {{ include('tape/_delete_form.html.twig') }}
-                    {% endif %}
-                    <button onclick="history.back()" class="btn btn-secondary">back</button>
-                </form>                
+                {% endif %} 
             </div>
         </div>
     </div>

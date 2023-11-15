@@ -43,6 +43,7 @@ class Member
         $this->inventory = new ArrayCollection();
         $this->galleries = new ArrayCollection();
         $this->tapesLiked = new ArrayCollection();
+        $this->creation = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

@@ -35,13 +35,17 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'name' => 'Seb',
                 'email' => 'seb@localhost',
                 'reference' => self::SEB_INVENTORY,
-                'creation' => new \DateTime('1980-01-01')
+                'creation' => new \DateTime('1998-10-01'),
+                'bio' => 'I\'m a big fan of Pink Floyd !',
+                'birth' => new \DateTime('1980-01-01'),
             ];
             yield [
                 'name' => 'Nathan',
                 'email' => 'nathan@localhost',
                 'reference' => self::NATHAN_INVENTORY,
-                'creation' => new \DateTime('2000-03-01')
+                'creation' => new \DateTime('2020-03-01'),
+                'bio' => 'Hello ! I\'m Nathan and I love vaporwave, future funk and japanese pop !',
+                'birth' => new \DateTime('2002-10-16'),
             ];
         }
 
@@ -191,6 +195,8 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 }
                 $member->setName($memberData['name']);
                 $member->setCreation($memberData['creation']);
+                $member->setBio($memberData['bio']);
+                $member->setBirth($memberData['birth']);
                 $manager->persist($member);
                 $manager->flush();
                 $this->addReference($memberData['name'], $member);

@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Gallery{% endblock %}
+{% block title %}Edit Member{% endblock %}
 
 {% block body %}
-    <h1>Create new Gallery</h1>
+    <h1>Edit Member</h1>
 
-    {{ include('gallery/_form.html.twig') }}
+    {{ include('member/_form.html.twig', {'button_label': 'Update'}) }}
 
     <button onclick="history.back()" class="btn btn-secondary" style="margin-left:20px;"">back</button>
+
 {% endblock %}
