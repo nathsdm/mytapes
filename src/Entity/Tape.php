@@ -28,7 +28,7 @@ class Tape
     #[ORM\Column(length: 255)]
     private ?string $artist = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Tape')]
+    #[ORM\ManyToOne(inversedBy: 'tapes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Inventory $inventory = null;
 

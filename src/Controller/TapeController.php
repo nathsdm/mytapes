@@ -24,11 +24,16 @@ class TapeController extends AbstractController
     {
         $entityManager = $doctrine->getManager();
         $tape = $entityManager->getRepository(Tape::class)->find($id);
-        $memberId = $this->getUser()->getMember($doctrine)->getId();
+        if ($this->getUser() == null) {
+            $user_has_liked_tape = null;
+        } else {
+            $memberId = $this->getUser()->getMember($doctrine)->getId();
+            $user_has_liked_tape = $tape->isLikedByMember($memberId);
+        }
 
         return $this->render('tape/show.html.twig', [
             'Tape' => $tape,
-            'user_has_liked_tape' => $tape->isLikedByMember($memberId),
+            'user_has_liked_tape' => $user_has_liked_tape,
         ]);
     }
 

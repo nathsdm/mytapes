@@ -15,18 +15,6 @@ class InventoryType extends AbstractType
         $member = $options['member'];
         $builder
             ->add('name')
-            ->add(
-                'tapes',
-                null,
-                [
-                    'class' => Tape::class,
-                    'choices' => $member->getTapes(),
-                    'choice_label' => 'name',
-                    'multiple' => true,
-                    'expanded' => true,
-                    'by_reference' => false,
-                ]
-            )
         ;
     }
 

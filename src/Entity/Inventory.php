@@ -53,7 +53,9 @@ class Inventory
 
     public function removeTape(Tape $tape): self
     {
-        $this->tapes->removeElement($tape);
+        if ($this->tapes->contains($tape)) {
+            $this->tapes->removeElement($tape);
+        }
 
         return $this;
     }

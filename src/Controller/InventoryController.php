@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Controleur Inventory
@@ -54,13 +55,18 @@ class InventoryController extends AbstractController
     #[Route('/{id}/edit', name: 'app_inventory_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Inventory $inventory, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
-        $form = $this->createForm(InventoryType::class, $inventory, ['member' => $this->getUser()->getMember($doctrine)]);
+        $form = $this->createForm(InventoryType::class, $inventory, [
+            'member' => $inventory->getMember()
+        ]);
         $form->handleRequest($request);
 
+        $previousTapes = $inventory->getTapes();
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_profile_show', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_inventory_edit', ['id' => $inventory->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('inventory/edit.html.twig', [

@@ -2,6 +2,9 @@ bootstrap_menu:
   menus:
     main:
       items:
+        about:
+          label: 'About us'
+          route: 'app_about'
         inventory:
           label: 'Gallery'
           route: 'app_gallery_index'

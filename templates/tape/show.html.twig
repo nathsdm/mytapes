@@ -12,16 +12,20 @@
                 <h1 class="display-4">{{ Tape.name }}</h1>
                 <p class="lead">{{ Tape.artist }} - {{ Tape.year }}</p>
                 <p class="lead" id="likeText"> {{ Tape.likes }} likes</p>
-                {% if user_has_liked_tape %}
-                    <div style="display: flex; align-items: center;">
-                        <i class="bi bi-heart-fill" id="likeIcon" style="color:red; font-size: 1.5em; padding: 0 10px;"></i>
-                        <button class="btn btn-primary" id="likeButton" onclick="dislikeTape2({{ Tape.id }})" style="width: 80px;">Dislike</button>
-                    </div>
-                {% else %}
-                    <div style="display: flex; align-items: center;">
-                        <i class="bi bi-heart" id="likeIcon" style="color:red; font-size: 1.5em; padding: 0 10px;"></i>
-                        <button class="btn btn-primary" id="likeButton" onclick="likeTape1({{ Tape.id }})" style="width: 80px;">Like</button>
-                    </div>
+                {% if app.user %}
+                    <p class="lead">User: </h2>
+                    <a href="{{ path('app_member_show', {'id': Tape.inventory.member.id}) }}" class="btn-outline-primary" style="margin: 10px">{{ Tape.inventory.member.name }}</a>
+                    {% if user_has_liked_tape %}
+                        <div style="display: flex; align-items: center;">
+                            <i class="bi bi-heart-fill" id="likeIcon" style="color:red; font-size: 1.5em; padding: 0 10px;"></i>
+                            <button class="btn btn-primary" id="likeButton" onclick="dislikeTape2({{ Tape.id }})" style="width: 80px;">Dislike</button>
+                        </div>
+                    {% else %}
+                        <div style="display: flex; align-items: center;">
+                            <i class="bi bi-heart" id="likeIcon" style="color:red; font-size: 1.5em; padding: 0 10px;"></i>
+                            <button class="btn btn-primary" id="likeButton" onclick="likeTape1({{ Tape.id }})" style="width: 80px;">Like</button>
+                        </div>
+                    {% endif %}
                 {% endif %}
                 <hr class="my-4">
                 <div class="card-group">
