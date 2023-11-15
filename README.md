@@ -26,17 +26,48 @@ To install and run the project, follow these steps:
 
 1. Clone the repository to your local machine using the following command:
 ```bash
-git clone
+git clone https://github.com/nathsdm/mytapes.git
 ```
-2. Run 'composer install' to install the project dependencies.
-3. Run 'symfony console doctrine:database:create' to create the database.
-4. Run 'symfony console doctrine:schema:create' to create the database schema.
-5. Run 'symfony console doctrine:fixtures:load' to load the fixtures.
-6. Run 'symfony server:start' to start the development server.
+2. Run the following command to install the dependencies:
+```bash
+composer install
+```
+3. Run the following command to create the database:
+```bash
+symfony console doctrine:database:create
+```
+4. Run the following command to create the database schema:
+```bash
+symfony console doctrine:schema:create
+```
+5. Run the following command to load the fixtures:
+```bash
+symfony console doctrine:fixtures:load
+```
+6. Run the following command to start the development server:
+```bash
+symfony server:start
+```
+
+Now you are ready to use the application !
 
 ## Usage
 
 To use the project, follow these steps:
 
-1. Open your web browser and navigate to the development server URL.
+1. Open your web browser and navigate to the development server URL (e.g. http://localhost:8000/home).
 2. Use the application to navigate through the inventories and tapes.
+
+## Tests
+
+With the data fixtures, you can test the application with the following users:
+
+- **Username**: seb@localhost
+- **Password**: seb
+- **Role**: ROLE_USER
+
+- **Username**: nathan@localhost
+- **Password**: nathan
+- **Role**: ROLE_ADMIN
+
+Each user has several tapes and galleries.

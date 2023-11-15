@@ -45,8 +45,8 @@ class UserFixtures extends Fixture
                         'ROLE_USER'
                 ];
                 yield [
-                        'olivier@localhost',
-                        'olivier',
+                        'nathan@localhost',
+                        'nathan',
                         'ROLE_ADMIN'
                 ];
         }

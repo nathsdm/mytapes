@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class AppFixtures extends Fixture implements DependentFixtureInterface
 {
     private const SEB_INVENTORY = 'seb-inventory';
-    private const OLIVIER_INVENTORY = 'olivier-inventory';
+    private const NATHAN_INVENTORY = 'nathan-inventory';
 
     private $projectDir;
 
@@ -38,9 +38,9 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'creation' => new \DateTime('1980-01-01')
             ];
             yield [
-                'name' => 'Olivier',
-                'email' => 'olivier@localhost',
-                'reference' => self::OLIVIER_INVENTORY,
+                'name' => 'Nathan',
+                'email' => 'nathan@localhost',
+                'reference' => self::NATHAN_INVENTORY,
                 'creation' => new \DateTime('2000-03-01')
             ];
         }
@@ -64,9 +64,9 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'member' => 'Seb',
             ];
             yield [
-                'name' => 'Olivier\'s inventory',
-                'reference' => self::OLIVIER_INVENTORY,
-                'member' => 'Olivier',
+                'name' => 'Nathan\'s inventory',
+                'reference' => self::NATHAN_INVENTORY,
+                'member' => 'Nathan',
             ];
         }
 
@@ -107,7 +107,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'name' => 'エコーチャンバーパーティー',
                 'artist' => 'Macroblank',
                 'year' => 2021,
-                'inventory' => self::OLIVIER_INVENTORY,
+                'inventory' => self::NATHAN_INVENTORY,
                 'isPublic' => true,
                 'likes' => 398,
                 'image' => '\public\images\tapes\tape4.png'
@@ -134,7 +134,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 'name' => 'Vaporwave !',
                 'description' => 'My favorite vaporwave tapes',
                 'published' => true,
-                'member' => 'Olivier',
+                'member' => 'Nathan',
                 'tapes' => [
                     'エコーチャンバーパーティー',
                 ],
