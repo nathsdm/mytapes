@@ -32,6 +32,11 @@ class MemberCrudController extends AbstractCrudController
             AssociationField::new('inventory')
                 ->onlyOnDetail()
                 ->setTemplatePath('admin/fields/member_inventories.html.twig'),
+
+            AssociationField::new('galleries')
+                ->onlyOnDetail()
+                ->setTemplatePath('admin/fields/member_galleries.html.twig'),
+
             TextField::new('name')
             
         ];
@@ -39,7 +44,7 @@ class MemberCrudController extends AbstractCrudController
     
     public function configureActions(Actions $actions): Actions
     {
-        // For whatever reason show isn't in the menu, bu default
+        // For whatever reason show isn't in the menu, by default
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
         ;

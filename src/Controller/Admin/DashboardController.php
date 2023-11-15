@@ -5,6 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Inventory;
 use App\Entity\Tape;
 use App\Entity\Member;
+use App\Entity\User;
+use App\Entity\Gallery;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -55,5 +57,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Inventory', 'fas fa-list', Inventory::class);
         yield MenuItem::linkToCrud('Tape', 'fas fa-list', Tape::class);
         yield MenuItem::linkToCrud('Member', 'fas fa-list', Member::class);
+        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
+        yield MenuItem::linkToCrud('Gallery', 'fas fa-list', Gallery::class);
+        yield MenuItem::linkToRoute('Back to the website', 'fas fa-arrow-left', 'home');
     }
 }

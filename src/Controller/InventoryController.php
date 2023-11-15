@@ -69,7 +69,7 @@ class InventoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_inventory_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_inventory_delete', methods: ['POST'])]
     public function delete(Request $request, Inventory $inventory, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$inventory->getId(), $request->request->get('_token'))) {

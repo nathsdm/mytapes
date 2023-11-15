@@ -10,7 +10,6 @@
       <table class="table">
            <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Name</th>
                     <th>Year</th>
                     <th>Artist</th>
@@ -19,8 +18,7 @@
             <tbody>
                 {% for tape in inventory.tapes %}
                 <tr>
-                    <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page': 'inventory', 'id_page': inventory.id}) }}">{{ tape.id }}</a> </td>
-                    <td>{{ tape.name }}</td>
+                    <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page': 'inventory', 'id_page': inventory.id}) }}">{{ tape.name }}</td>
                     <td>{{ tape.year }}</td>
                     <td>{{ tape.artist }}</td>
                 </tr>
@@ -30,5 +28,4 @@
 
       <button onclick="history.back()" class="btn btn-secondary">back</button>
 
-    {{ include('inventory/_delete_form.html.twig') }}
 {% endblock %}

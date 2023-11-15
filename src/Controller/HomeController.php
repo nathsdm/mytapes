@@ -11,12 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
 
 #[Route('/home')]
 class HomeController extends AbstractController
 {
     #[Route('', name: 'home', methods: ['GET'])]
-    public function indexAction(EntityManagerInterface $entityManager)
+    public function indexAction(EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
     {
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('tape')
@@ -26,8 +27,15 @@ class HomeController extends AbstractController
 
         $tapes = $queryBuilder->getQuery()->getResult();
 
+        if($this->getUser() != null) {
+            $inventoryId = $this->getUser()->getMember($doctrine)->getInventory()[0]->getId();
+        } else {
+            $inventoryId = null;
+        }
+
         return $this->render('index.html.twig', [
             'tapes' => $tapes,
+            'inventoryId' => $inventoryId
         ]);
     }
 

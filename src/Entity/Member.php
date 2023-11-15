@@ -16,7 +16,7 @@ class Member
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'member', targetEntity: Inventory::class)]
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: Inventory::class, cascade: ['persist', 'remove'])]
     private Collection $inventory;
 
     #[ORM\Column(length: 255)]
@@ -31,7 +31,7 @@ class Member
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $creation = null;
 
-    #[ORM\OneToMany(mappedBy: 'Member', targetEntity: Gallery::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'Member', targetEntity: Gallery::class, cascade: ['persist', 'remove'])]
     private Collection $galleries;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

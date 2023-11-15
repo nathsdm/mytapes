@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Tape;
+use App\Entity\Gallery;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -15,11 +15,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TapeCrudController extends AbstractCrudController
+class GalleryCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Tape::class;
+        return Gallery::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -27,18 +27,25 @@ class TapeCrudController extends AbstractCrudController
         return [
             // Id shouldn't be modified
             IdField::new('id')->hideOnForm(),
-            
-            // Other fields
-            AssociationField::new('inventory'),
+
+            // Member is a string
+            AssociationField::new('Member'),
+
+            // Name is a string            
             TextField::new('name'),
-            IntegerField::new('year'),
-            TextField::new('artist')
+            
+            // Association with Tape
+            AssociationField::new('tapes')
+                ->onlyOnDetail()
+                ->setFormTypeOption('multiple', true)
+                ->setTemplatePath('admin/fields/gallery_tapes.html.twig'),
+            
         ];
     }
     
     public function configureActions(Actions $actions): Actions
     {
-        // For whatever reason show isn't in the menu, by default
+
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
         ;
@@ -47,6 +54,7 @@ class TapeCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->overrideTemplate('crud/index', 'admin/crud/tape_index.html.twig');
+            ->overrideTemplate('crud/index', 'admin/crud/gallery_index.html.twig')
+        ;
     }
 }

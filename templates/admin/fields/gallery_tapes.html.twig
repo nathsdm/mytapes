@@ -1,0 +1,19 @@
+{# source: https://stackoverflow.com/a/65082524/1814910 #}
+<ul>
+    {% for tape in field.value %}
+        {%- set url = ea_url()
+        .setController('App\\Controller\\Admin\\TapeCrudController')
+        .setAction('detail')
+        .setEntityId(tape.id)
+        -%}
+        <li>
+            <a href="{{ url }}">
+            {{ tape }}
+            </a>
+        </li>
+        {% else %}
+        </ul>  
+        <span class="badge badge-secondary">None</span>
+        <ul>
+    {% endfor %}
+</ul>

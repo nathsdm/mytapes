@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Tape;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -15,11 +15,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\Routing\Annotation\Route;
 
-class TapeCrudController extends AbstractCrudController
+class UserCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Tape::class;
+        return User::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -29,10 +29,17 @@ class TapeCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             
             // Other fields
-            AssociationField::new('inventory'),
-            TextField::new('name'),
-            IntegerField::new('year'),
-            TextField::new('artist')
+            AssociationField::new('member')
+                ->onlyOnDetail()
+                ->setTemplatePath('admin/fields/user_member.html.twig'),
+            
+            TextField::new('email'),
+
+            TextField::new('password')
+                ->onlyOnForms()
+                ->setFormTypeOption('empty_data', '')
+                ->setFormTypeOption('required', false),
+            
         ];
     }
     
@@ -47,6 +54,9 @@ class TapeCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->overrideTemplate('crud/index', 'admin/crud/tape_index.html.twig');
+            ->overrideTemplate('crud/index', 'admin/crud/user_index.html.twig')
+        ;
     }
 }
+
+
