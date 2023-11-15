@@ -62,10 +62,12 @@ To use the project, follow these steps:
 
 With the data fixtures, you can test the application with the following users:
 
+Seb:
 - **Username**: seb@localhost
 - **Password**: seb
 - **Role**: ROLE_USER
 
+Nathan:
 - **Username**: nathan@localhost
 - **Password**: nathan
 - **Role**: ROLE_ADMIN
