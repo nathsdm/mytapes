@@ -28,13 +28,13 @@
                     {% endif %}
                 {% endif %}
                 <hr class="my-4">
-                <div class="card-group">
+                <form>
                     {% if app.user and Tape.inventory.member.User == app.user %}
                     <a href="{{ path('app_tape_edit', {'id': Tape.id}) }}" class="btn btn-primary">edit</a>
                     {{ include('tape/_delete_form.html.twig') }}
                     {% endif %}
                     <button onclick="history.back()" class="btn btn-secondary">back</button>
-                </div>                
+                </form>                
             </div>
         </div>
     </div>

@@ -38,13 +38,13 @@ class InventoryController extends AbstractController
         $inventoryRepo = $doctrine->getRepository(Inventory::class);
         $inventory = $inventoryRepo->find($id);
 
+        if (!$inventory) {
+            throw $this->createNotFoundException('The inventory does not exist');
+        }
+
         $hasAccess = $this->isGranted('ROLE_ADMIN') || ($this->getUser()->getMember($doctrine) == $inventory->getMember());
         if(! $hasAccess) {
             throw $this->createAccessDeniedException("You cannot access another member's inventory!");
-        }
-
-        if (!$inventory) {
-                throw $this->createNotFoundException('The inventory does not exist');
         }
             
         return $this->render('inventory/show.html.twig',

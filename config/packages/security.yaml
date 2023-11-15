@@ -17,7 +17,7 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
-                default_target_path: home
+                default_target_path: app_profile_show
 
             logout:
                 path: app_logout
@@ -31,8 +31,9 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/member, roles: ROLE_USER }
+        - { path: ^/tape, roles: ROLE_USER }
 
-    access_denied_url: access_denied
+    access_denied_url: /home/accessdenied
 
 when@test:
     security:

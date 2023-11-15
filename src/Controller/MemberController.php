@@ -17,6 +17,11 @@ class MemberController extends AbstractController
         $entityManager = $doctrine->getManager();
         $members = $entityManager->getRepository(Member::class)->findAll();
 
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        if(! $hasAccess) {
+            throw $this->createAccessDeniedException("You cannot access member's list!");
+        }
+
         return $this->render('member/index.html.twig', [
             'controller_name' => 'MemberController',
             'members' => $members

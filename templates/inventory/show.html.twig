@@ -13,6 +13,7 @@
                     <th>Name</th>
                     <th>Year</th>
                     <th>Artist</th>
+                    <th>Likes</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +22,7 @@
                     <td> <a href="{{ path('tape_show', { 'id': tape.id, 'page': 'inventory', 'id_page': inventory.id}) }}">{{ tape.name }}</td>
                     <td>{{ tape.year }}</td>
                     <td>{{ tape.artist }}</td>
+                    <td>{{ tape.likes }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

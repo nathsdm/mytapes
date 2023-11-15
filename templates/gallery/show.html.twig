@@ -26,21 +26,14 @@
         </tbody>
     </table>
 
+    {% if app.user and gallery.Member.User == app.user %}
+        {{ include('gallery/_delete_form.html.twig') }}
+    {% endif %}
+
     <div class="card-group">
         {% if app.user and gallery.Member.User == app.user %}
-        <a href="{{ path('app_gallery_edit', {'id': gallery.id}) }}" class="btn btn-primary">edit</a>
-        {{ include('gallery/_delete_form.html.twig') }}
+            <a href="{{ path('app_gallery_edit', {'id': gallery.id}) }}" class="btn btn-primary">Edit gallery</a>
         {% endif %}
-        <button onclick="history.back()" class="btn btn-secondary">back</button>
+        <button onclick="history.back()" class="btn btn-secondary">Back</button>
     </div>
-    <style>
-        .card-group a {
-            margin-right: 5px;
-            margin-left: 5px;
-        }
-        .card-group button {
-            margin-right: 5px;
-            margin-left: 5px;
-        }
-    </style>
 {% endblock %}
