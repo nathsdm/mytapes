@@ -12,17 +12,22 @@ The project follows a [MVC (Model-View-Controller)](https://en.wikipedia.org/wik
 
 ## Entities
 
-The project has three entities: Tape, Inventory, and Member. Here's a brief overview of each entity:
+The project has five entities: Tape, Inventory, Gallery, Member and User. Here's a brief overview of each entity:
 
 - Tape: Represents a music tape. Each tape has a name and belongs to an inventory.
 - Inventory: Represents a collection of tapes owned by a member. Each inventory has a name and belongs to a member.
+- Gallery: Represents a collection of tapes. Each gallery has a name and contains one or more tapes. A gallery can be public or private.
 - Member: Represents a member who owns one or more inventories. Each member has a name.
+- User: Represents a user who can log in to the application. Each user has a username, password, and is linked to a member.
 
 ## Installation
 
 To install and run the project, follow these steps:
 
-1. Clone the repository to your local machine.
+1. Clone the repository to your local machine using the following command:
+```bash
+git clone
+```
 2. Run 'composer install' to install the project dependencies.
 3. Run 'symfony console doctrine:database:create' to create the database.
 4. Run 'symfony console doctrine:schema:create' to create the database schema.
